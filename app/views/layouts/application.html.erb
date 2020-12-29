@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clockoutapp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header class="nav-bar">
+      <div class="nav-link">
+        <%= link_to "Home", root_path %>
+      </div>
+
+      <% if current_user&.admin? %>
+        <div class="nav-link">
+          <%= link_to "Time Logs", clock_events_path %>
+        </div>
+      <% end %>
+
+      <% if current_user %>
+        <div class="nav-link">
+          <% most_recent = ClockEvent.most_recent_event_for(current_user) %>
+          <% if most_recent&.clock_in == true %>
+            <%= link_to "Clock Out", clock_events_path, method: :post %>
+          <% else %>
+            <%= link_to "Clock In", clock_events_path, method: :post %>
+          <% end %>
+        </div>
+
+        <h1>Clock Your Hours</h1>
+
+        <div class="logout">
+          <div class="nav-link"><%= link_to "Account", edit_user_path(current_user) %></div>
+          <div class="nav-link"><%= link_to "Log Out", destroy_user_session_path(:id => current_user.id), method: :delete %></div>
+        </div>
+      <% end %>
+    </header>
+    <div class=current-user-email-container>
+      <div class="current-user-email"><%= current_user&.email %></div>
+    </div>
+    <%= yield %>
+  </body>
+</html>

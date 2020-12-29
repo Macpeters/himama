@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>User</th>
+    <th>Date</th>
+    <th>Time Logs</th>
+    <th>Total Hours Worked</th>
+  </tr>
+  <% @clock_events.all.each do |clock_event| %>
+    <tr>
+      <th><%= clock_event.user %></th>
+      <th><%= clock_event.occurred_at %></th>
+    </tr>
+  <% end %>
+</table>
+

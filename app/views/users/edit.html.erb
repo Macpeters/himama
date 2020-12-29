@@ -1,0 +1,8 @@
+<h1>Edit Your Information</h1>
+
+<%= form_for @user do |f| %>
+  name: <%= f.text_field :name %><br />
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "Change Password", edit_user_registration_path(@user) %>
