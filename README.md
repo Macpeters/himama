@@ -1,5 +1,18 @@
 # README
 
+## TODO
+
+* authenticate admins in the clock events controller
+* allow users to delete their own events (but not edit) - require confirmation
+* create seed users
+* test on heroku
+
+### For the list of all clock events:
+* Default view shows events grouped by user
+* collect all events by day
+* count the hours worked each day
+* allow events to be edited and/or deleted - require confirmation before delete
+
 
 ## Questions
 

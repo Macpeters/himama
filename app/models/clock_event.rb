@@ -5,6 +5,12 @@ class ClockEvent < ApplicationRecord
     where(user: user)
   }
 
+  scope :this_day, ->(day){
+    where(
+      "date_trunc('day',occurred_at) = ?", day
+    )
+  }
+
   def self.most_recent_event_for(current_user)
     ClockEvent.by_user(current_user).last
   end

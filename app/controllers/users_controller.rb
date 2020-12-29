@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update(user_params)
     @user.save
-    redirect_to edit_user_path(@user)
+    redirect_to edit_user_path(@user), notice: "User was saved Successfully"
   end
 
   def user_params

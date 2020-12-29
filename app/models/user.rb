@@ -12,4 +12,9 @@ class User < ApplicationRecord
   def admin?
     roles.where(role_type: 'admin').any?
   end
+
+  def to_s
+    return name if name.present?
+    return email
+  end
 end
