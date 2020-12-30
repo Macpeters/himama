@@ -2,19 +2,23 @@
 <table class="todays-clocked-user-events">
   <tr>
     <th>Date</th>
-    <th>Time</th>
-    <th>In/Out</th>
+    <th>Time In</th>
+    <th>Time Out</th>
+    <th>Hours Worked</th>
     <th>Delete</th>
   </tr>
-  <% @clock_events.all.each do |clock_event| %>
+  <% @clock_events.each do |clock_event| %>
+  <% deletable_event = clock_event[:clock_out].present? ? clock_event[:clock_out] : clock_event[:clock_in] %>
     <tr>
-      <td><%= clock_event.occurred_at_date.strftime('%F') %></td>
-      <td><%= clock_event.occurred_at_time.strftime('%R') %></td>
-      <td><%= clock_event.in_or_out %></td>
-      <td><%= link_to "Delete", clock_event_path(id: clock_event.id), method: :delete %></td>
+      <td><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></td>
+      <td><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></td>
+      <td><%= clock_event[:clock_out]&.occurred_at_time&.strftime('%R') %></td>
+      <th><%= clock_event[:clock_out]&.hours_clocked&.round(3) %></th>
+      <td><%= link_to "Delete", clock_event_path(id: deletable_event.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>
+<h3>Total Hours Logged Today: </h3><%= @hours_logged_today.round(3) %>
 
 
 

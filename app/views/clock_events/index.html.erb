@@ -1,20 +1,33 @@
-<h2>Time Clocked</h2>
-<table class="admin-clocked-user-events">
-  <tr>
-    <th>User</th>
-    <th>Date</th>
-    <th>Time In</th>
-    <th>Time Out</th>
-    <th>Total Hours Worked</th>
-  </tr>
-  <% @clock_events.each do |clock_event| %>
+<div id="content">
+  <h2>Time Clocked</h2>
+  <table class="admin-clocked-user-events">
     <tr>
-      <th><%= clock_event[:clock_in].user.to_s %></th>
-      <th><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></th>
-      <th><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></th>
-      <th><%= clock_event[:clock_out].occurred_at_time.strftime('%R') %></th>
-      <th><%= clock_event[:clock_out].hours_clocked.round(3) %></th>
+      <th>User</th>
+      <th>Date</th>
+      <th>Time In</th>
+      <th>Time Out</th>
+      <th>Hours Worked</th>
+      <th>Total Hours This Day</th>
     </tr>
-  <% end %>
-</table>
+    <% @clock_events.each do |clock_event| %>
+      <tr>
+        <th><%= clock_event[:clock_in].user.to_s %></th>
+        <th><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></th>
+        <th><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></th>
+        <th><%= clock_event[:clock_out]&.occurred_at_time&.strftime('%R') %></th>
+        <th><%= clock_event[:clock_out]&.hours_clocked&.round(3) %></th>
+        <th><%= @total_hours_worked_today[clock_event[:clock_in].user_id]&.round(3) %></th>
+      </tr>
+    <% end %>
+  </table>
+</div>
 
+
+
+<div class="date_links">
+  <% @dates.each do |date|%>
+    <div class="date-link">
+      <%= link_to date.strftime('%F'), clock_events_path(params: { date: date }) %>
+    </div>
+  <% end %>
+</div>

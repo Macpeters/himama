@@ -5,19 +5,23 @@ class ClockEventsController < ApplicationController
   NUM_SECONDS_PER_HOUR = 3600
 
   def index
-    clock_in_events = ClockEvent.all
-      .order(occurred_at_time: :desc)
+    date = params[:date]
+    date ||= Time.zone.now.beginning_of_day
 
-    @clock_events = []
+    clock_in_events = ClockEvent
+      .where("clock_in = ? AND occurred_at_date = ?", true, date)
+      .order(user_id: :asc, occurred_at_time: :desc)
+      .where(clock_in: true)
 
-    # TODO: make this more performant
-    clock_in_events.each do |cie|
-      @clock_events << {
-        clock_in: cie,
-        clock_out: ClockEvent.find_by(clock_in_id: cie.id)
-      }
-    end
-    byebug
+    @dates = ClockEvent.all.pluck(:occurred_at_date).uniq
+
+    @total_hours_worked_today = ClockEvent
+      .where("clock_in = ? AND occurred_at_date = ?", false, date)
+      .select(:user_id)
+      .group(:user_id)
+      .sum(:hours_clocked)
+
+    @clock_events = ClockEventMapper.map_clock_events(clock_in_events)
   end
 
   def create
