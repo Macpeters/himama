@@ -8,12 +8,15 @@ class ClockEventsController < ApplicationController
     date = params[:date]
     date ||= Time.zone.now.beginning_of_day
 
+    Rails.logger.info("DATE: #{date.inspect}")
+
     clock_in_events = ClockEvent
       .where("clock_in = ? AND occurred_at_date = ?", true, date)
       .order(user_id: :asc, occurred_at_time: :desc)
       .where(clock_in: true)
 
-    @dates = ClockEvent.all.order(occurred_at_time: :desc).pluck(:occurred_at_date).uniq
+    @dates = ClockEvent.all.order(occurred_at_date: :desc).pluck(:occurred_at_date).uniq
+    Rails.logger.info("DATES: #{@dates.inspect}")
 
     @total_hours_worked_today = ClockEvent
       .where("clock_in = ? AND occurred_at_date = ?", false, date)

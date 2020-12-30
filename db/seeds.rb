@@ -11,6 +11,7 @@ Role.destroy_all
 UserRole.destroy_all
 ClockEvent.destroy_all
 
+# ADMIN USER -----------------------------------------------------
 admin_user = User.create!(
   name: 'Admin User',
   email: 'admin@email.com',
@@ -22,7 +23,7 @@ admin_role = Role.create(
 UserRole.create(role: admin_role, user: admin_user)
 puts "Created Admin User: #{admin_user.id}"
 
-(0..10).to_a.each do |index|
+(0..3).to_a.each do |index|
   clock_in_event = ClockEvent.create!(
     user: admin_user,
     clock_in: true,
@@ -40,16 +41,17 @@ puts "Created Admin User: #{admin_user.id}"
   )
 
   clock_in_event.update(clock_out_id: clock_out_event.id)
-  puts "Created ClockEvents for Admin User: #{index}"
+  puts "Created Clock In for Admin User: #{index} - #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
+  puts "Created Clock Out for Admin User: #{index} - #{clock_out_event.id} #{clock_out_event.occurred_at_date} -- #{clock_out_event.clock_in}"
 end
 
-
+# TEST USER 1 -----------------------------------------------------
 test_user_1 = User.create!(
   name: 'Test User1',
   email: 'testuser1@email.com',
   password: '123abc'
 )
-puts "Created Test User: #{test_user_1.id}"
+puts "Created Test User 1: #{test_user_1.id}"
 
 (0..5).to_a.each do |index|
   hour_difference = 6
@@ -68,46 +70,49 @@ puts "Created Test User: #{test_user_1.id}"
     hours_clocked: hour_difference,
     clock_in_id: clock_in_event.id
   )
-  puts "Created Clock Events for TestUser1: #{index}"
+  puts "Created Clock In for Test User 1: #{index} - #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
+  puts "Created Clock Out for Test User 1: #{index} - #{clock_out_event.id} #{clock_out_event.occurred_at_date} -- #{clock_out_event.clock_in}"
 
   # multiple Clock in/outs per day
   clock_in_event_2 = ClockEvent.create!(
     user: test_user_1,
     clock_in: true,
-    occurred_at_date: Time.zone.now.beginning_of_day - index.days + 2.hours,
+    occurred_at_date: Time.zone.now.beginning_of_day - index.days,
     occurred_at_time: Time.zone.now - index.days + 2.hours
   )
 
   clock_out_event_2 = ClockEvent.create!(
     user: test_user_1,
     clock_in: false,
-    occurred_at_date: Time.zone.now.beginning_of_day - index.days + 4.hours,
+    occurred_at_date: Time.zone.now.beginning_of_day - index.days,
     occurred_at_time: Time.zone.now + 6.hours - index.days + 4.hours,
     hours_clocked: 2,
     clock_in_id: clock_in_event.id
   )
 
   clock_in_event_2.update(clock_out_id: clock_out_event_2.id)
-  puts "Created MORE Clock Events for TestUser1: #{index}"
+  puts "Created ANOTHER Clock In for Test User 1: #{index} - #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
+  puts "Created ANOTHER Clock Out for Test User 1: #{index} - #{clock_out_event.id} #{clock_out_event.occurred_at_date} -- #{clock_out_event.clock_in}"
 end
 
 clock_in_event = ClockEvent.create!(
   user: test_user_1,
   clock_in: true,
-  occurred_at_date: Time.zone.now.beginning_of_day + 6.hours,
-  occurred_at_time: Time.zone.now
+  occurred_at_date: Time.zone.now.beginning_of_day,
+  occurred_at_time: Time.zone.now + 6.hours
 )
-puts "Created Single Clock in Event for TestUser1"
+puts "Created Single Clock in Event for TestUser1: #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
 
 
+# TEST USER 2 -----------------------------------------------------
 test_user_2 = User.create!(
   name: 'Test User2',
   email: 'testuser2@email.com',
   password: '123abc'
 )
-puts "Created Test User: #{test_user_2.id}"
+puts "Created Test User 2: #{test_user_2.id}"
 
-(3..14).to_a.each do |index|
+(0..7).to_a.each do |index|
   hour_difference = 1
   clock_in_event = ClockEvent.create!(
     user: test_user_2,
@@ -126,18 +131,19 @@ puts "Created Test User: #{test_user_2.id}"
   )
 
   clock_in_event.update(clock_out_id: clock_out_event.id)
-  puts "Created Clock Events for TestUser2: #{index}"
+  puts "Created ANOTHER Clock In for Test User 2: #{index} - #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
+  puts "Created ANOTHER Clock Out for Test User 2: #{index} - #{clock_out_event.id} #{clock_out_event.occurred_at_date} -- #{clock_out_event.clock_in}"
 end
 
-
+# TEST USER 3 -----------------------------------------------------
 test_user_3 = User.create!(
   name: 'Test User3',
   email: 'testuser3@email.com',
   password: '123abc'
 )
-puts "Created Test User: #{test_user_3.id}"
+puts "Created Test User 3: #{test_user_3.id}"
 
-(2..7).to_a.each do |index|
+(0..15).to_a.each do |index|
   hour_difference = 3
   clock_in_event = ClockEvent.create!(
     user: test_user_3,
@@ -156,7 +162,8 @@ puts "Created Test User: #{test_user_3.id}"
   )
 
   clock_in_event.update(clock_out_id: clock_out_event.id)
-  puts "Created Clock Events for TestUser3: #{index}"
+  puts "Created ANOTHER Clock In for Test User 3: #{index} - #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
+  puts "Created ANOTHER Clock Out for Test User 3: #{index} - #{clock_out_event.id} #{clock_out_event.occurred_at_date} -- #{clock_out_event.clock_in}"
 end
 
 clock_in_event = ClockEvent.create!(
@@ -165,7 +172,7 @@ clock_in_event = ClockEvent.create!(
   occurred_at_date: Time.zone.now.beginning_of_day,
   occurred_at_time: Time.zone.now
 )
-puts "Created Single Clock in Event for TestUser3: #{clock_in_event}"
+puts "Created Single Clock in Event for TestUser3: #{clock_in_event.id} #{clock_in_event.occurred_at_date} -- #{clock_in_event.clock_in}"
 
 
 
