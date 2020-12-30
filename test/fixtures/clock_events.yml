@@ -3,9 +3,13 @@
 one:
   user_id: 1
   clock_in: false
-  occurred_at: 2020-12-29 13:16:07
+  occurred_at_date: 2020-12-29 00:00:00
+  occurred_at_time: 2020-12-29 13:16:07
+  clock_out_id: 2
 
 two:
   user_id: 1
   clock_in: false
-  occurred_at: 2020-12-29 13:16:07
+  occurred_at_date: 2020-12-29 00:00:00
+  occurred_at_time: 2020-12-29 13:16:07
+  clock_in_id: 1

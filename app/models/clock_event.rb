@@ -1,14 +1,10 @@
 class ClockEvent < ApplicationRecord
   belongs_to :user
 
+  validates :clock_in_id, presence: true, unless: :clock_in
+
   scope :by_user, ->(user) {
     where(user: user)
-  }
-
-  scope :this_day, ->(day){
-    where(
-      "date_trunc('day',occurred_at) = ?", day
-    )
   }
 
   def self.most_recent_event_for(current_user)

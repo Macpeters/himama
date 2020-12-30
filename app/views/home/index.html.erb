@@ -1,17 +1,17 @@
-<h1>Clock Your Hours</h1>
-
 <h2>Today's Time Clocked</h2>
 <table class="todays-clocked-user-events">
   <tr>
     <th>Date</th>
     <th>Time</th>
     <th>In/Out</th>
+    <th>Delete</th>
   </tr>
   <% @clock_events.all.each do |clock_event| %>
     <tr>
-      <td><%= clock_event.occurred_at.strftime('%F') %></td>
-      <td><%= clock_event.occurred_at.strftime('%R') %></td>
+      <td><%= clock_event.occurred_at_date.strftime('%F') %></td>
+      <td><%= clock_event.occurred_at_time.strftime('%R') %></td>
       <td><%= clock_event.in_or_out %></td>
+      <td><%= link_to "Delete", clock_event_path(id: clock_event.id), method: :delete %></td>
     </tr>
   <% end %>
 </table>

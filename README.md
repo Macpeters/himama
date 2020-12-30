@@ -1,18 +1,20 @@
 # README
+[On Heroku](https://damp-sands-38141.herokuapp.com/)
+* need to migrate using heroku console
+* need to add a role to admin user
 
 ## TODO
-
 * authenticate admins in the clock events controller
 * allow users to delete their own events (but not edit) - require confirmation
 * create seed users
-* test on heroku
+* automatic clock out at end of day?
+* Warning on days where clock out didn't happen manually
 
 ### For the list of all clock events:
 * Default view shows events grouped by user
 * collect all events by day
 * count the hours worked each day
 * allow events to be edited and/or deleted - require confirmation before delete
-
 
 ## Questions
 

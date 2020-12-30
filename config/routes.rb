@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root to: 'home#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :clock_events, only: %i(index create)
-  resources :users, only: [:edit, :update]
+  resources :clock_events, only: %i(index create destroy)
+  resources :users, only: %i(edit update)
 end

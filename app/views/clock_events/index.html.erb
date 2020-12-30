@@ -1,14 +1,19 @@
-<table>
+<h2>Time Clocked</h2>
+<table class="admin-clocked-user-events">
   <tr>
     <th>User</th>
     <th>Date</th>
-    <th>Time Logs</th>
+    <th>Time In</th>
+    <th>Time Out</th>
     <th>Total Hours Worked</th>
   </tr>
   <% @clock_events.each do |clock_event| %>
     <tr>
-      <th><%= clock_event.user.to_s %></th>
-      <th><%= clock_event.occurred_at %></th>
+      <th><%= clock_event[:clock_in].user.to_s %></th>
+      <th><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></th>
+      <th><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></th>
+      <th><%= clock_event[:clock_out].occurred_at_time.strftime('%R') %></th>
+      <th><%= clock_event[:clock_out].hours_clocked.round(3) %></th>
     </tr>
   <% end %>
 </table>

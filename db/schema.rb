@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_182710) do
+ActiveRecord::Schema.define(version: 2020_12_30_131607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,9 +18,13 @@ ActiveRecord::Schema.define(version: 2020_12_29_182710) do
   create_table "clock_events", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "clock_in"
-    t.datetime "occurred_at"
+    t.datetime "occurred_at_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "occurred_at_date"
+    t.integer "clock_in_id"
+    t.integer "clock_out_id"
+    t.float "hours_clocked"
   end
 
   create_table "roles", force: :cascade do |t|
