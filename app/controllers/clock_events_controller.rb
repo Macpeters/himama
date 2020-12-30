@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ClockEventsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   NUM_SECONDS_PER_HOUR = 3600
 
   def index
@@ -13,7 +13,7 @@ class ClockEventsController < ApplicationController
       .order(user_id: :asc, occurred_at_time: :desc)
       .where(clock_in: true)
 
-    @dates = ClockEvent.all.pluck(:occurred_at_date).uniq
+    @dates = ClockEvent.all.order(occurred_at_time: :desc).pluck(:occurred_at_date).uniq
 
     @total_hours_worked_today = ClockEvent
       .where("clock_in = ? AND occurred_at_date = ?", false, date)
