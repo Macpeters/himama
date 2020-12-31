@@ -70,7 +70,8 @@ The ClockEvent model lets us keep track of events (whenever someone clocks in or
 * improve the ui - use icons, a nicer date picker, etc
 * admin screen should show the total hours per user per day only once, and not on a clock in/out event that hasn't been clocked out yet
 * home screen should also show previous days - for at least a week, so employees can check their hours.
-
+* validate that hours clocked is a positive number
+* currently anyone can sign up and have employee access - we could lock it down so that an admin or someone has to validate that employee before they can have access (give them the employee role, and lock down home screen/clocking in/out until they have that role, and create an admin screen where admins can accept or refuse employee requests)
 
 ### What if you were given a month?
 * ability for admin to send a message to all employees to notify of a free half-day early holiday or something
