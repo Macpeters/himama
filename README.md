@@ -15,7 +15,6 @@ I started with Rails 6, but backtracked to 5 because webpacker is not well enoug
 - password
 - *has_many user_roles*
 - *Use devise to for access control/login*
-- https://launchschool.com/blog/how-to-use-devise-in-rails-for-authentication
 
 **Role**
 - id
@@ -59,7 +58,7 @@ The User model allows us to keep track of who is clocking in and out, provides u
 The Role model lets us offer greater access to certain employees, while not allowing other employees that access.  We could also allow functionality for non-employees - we would only need to add more roles/user_roles to keep track.
 
 The ClockEvent model lets us keep track of events (whenever someone clocks in or out)
-  - a date is stored without time to make querying easier when we want all events from a specific day.  I could truncate the datetime every time, but scaling that would be difficult.
+  - a date is stored without time to make querying easier when we want all events from a specific day.  I could truncate the datetime every time, but scaling that would not be performant.
   - Matching events: these let us ensure we can track events in a meaningful way and list them for users so that they can be understood.  It also makes it easier to control what events can be deleted (you can't delete the clock in event if you have a clock out event - that would give us bad data)
     - a clock_in event will receive a clock_out event id when one is created
     - a clock_out event gets the id of the matching clock_in event
