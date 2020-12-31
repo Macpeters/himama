@@ -8,7 +8,7 @@
     <th>Delete</th>
   </tr>
   <% @clock_events.each do |clock_event| %>
-  <% deletable_event = clock_event[:clock_out].present? ? clock_event[:clock_out] : clock_event[:clock_in] %>
+    <% deletable_event = clock_event[:clock_out].present? ? clock_event[:clock_out] : clock_event[:clock_in] %>
     <tr>
       <td><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></td>
       <td><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></td>

@@ -1,0 +1,7 @@
+<h1>Edit Clock Event</h1>
+
+<%= form_for @clock_event do |f| %>
+  <div><%= f.object.user.to_s %></div>
+  <%= f.datetime_local_field :occurred_at_time %>
+  <div><%= f.submit %></div>
+<% end %>

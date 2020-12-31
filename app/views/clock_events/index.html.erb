@@ -8,15 +8,26 @@
       <th>Time Out</th>
       <th>Hours Worked</th>
       <th>Total Hours This Day</th>
+      <th>Delete</th>
     </tr>
     <% @clock_events.each do |clock_event| %>
+      <% deletable_event = clock_event[:clock_out].present? ? clock_event[:clock_out] : clock_event[:clock_in] %>
       <tr>
         <th><%= clock_event[:clock_in].user.to_s %></th>
         <th><%= clock_event[:clock_in].occurred_at_date.strftime('%F') %></th>
-        <th><%= clock_event[:clock_in].occurred_at_time.strftime('%R') %></th>
-        <th><%= clock_event[:clock_out]&.occurred_at_time&.strftime('%R') %></th>
+        <th>
+          <%= link_to 'Edit', edit_clock_event_path(clock_event[:clock_in]) %>
+          <%= clock_event[:clock_in].occurred_at_time.strftime('%R') %>
+        </th>
+        <th>
+          <%= link_to 'Edit', edit_clock_event_path(clock_event[:clock_out]) if clock_event[:clock_out] %>
+          <%= clock_event[:clock_out]&.occurred_at_time&.strftime('%R') %>
+        </th>
         <th><%= clock_event[:clock_out]&.hours_clocked&.round(3) %></th>
         <th><%= @total_hours_worked_today[clock_event[:clock_in].user_id]&.round(3) %></th>
+        <td>
+          <%= link_to "Delete", clock_event_path(id: deletable_event.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </table>
