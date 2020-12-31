@@ -69,6 +69,7 @@ The ClockEvent model lets us keep track of events (whenever someone clocks in or
 * better authentication - we currently hide a link to anyone but admins, but that is only front-end authentication, and users could get past it.  I also lost time trying to get basic user authentication working with rspec controller tests.  Right now we can have one or the other, but not both.  CanCan might be a better way to control access.
 * improve the ui - use icons, a nicer date picker, etc
 * admin screen should show the total hours per user per day only once, and not on a clock in/out event that hasn't been clocked out yet
+* home screen should also show previous days - for at least a week, so employees can check their hours.
 
 
 ### What if you were given a month?
